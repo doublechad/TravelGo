@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+        <title>會員資料編輯</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+        
+        <link rel="stylesheet" href="./css/test4.css">
+        <script type="text/javascript" src="./script/hoti.css"></script>
+    </head>
+    <link rel="stylesheet" href="./css/body.css" type="text/css" />
+  
+<script type="text/javascript" src="./script/header.js"></script>
+  <style>
+       a:active
+        {
+            color: grey;
+        }
+         a::before{
+        
+            color: grey;
+        }
+  </style>
+ <body>
+
+<div class="wrapper">
+       
+            <nav id="sidebar" style="height:auto;">
+                <div class="sidebar-header"style="margin-top:60px;margin-right:2px">
+                  <img src="./imgs/user.png"></img>
+                </div>
+                <div class="container-fluid">
+	<div class="row">
+		<div class="col-md-12">
+			<div id="card-763941">
+				<div class="card">
+					<div class="card-header">
+						 <a  href="#789">個人資料管理</a>
+					</div>
+	
+				</div>
+				<div class="card">
+					<div class="card-header"style="color:blue">
+						 <a class="collapsed card-link" data-toggle="collapse" data-parent="#card-763941" href="#card-element-457704" style="color:blue">相簿管理</a>
+					</div>
+					<div id="card-element-457704" class="collapse">
+						<div class="card-block">
+						<a href="/personalupload.html">照片上傳</a>
+						</div>
+												<div class="card-block">
+						<a href="/perimg.html">照片集</a>
+						</div>
+					</div>
+				</div>
+								<div class="card">
+					<div class="card-header">
+						 <a href="#123">我的最愛</a>
+					</div>
+		
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+            </nav>
+
+            <!-- Page Content Holder -->
+            <div id="content" style=margin-top:65px>
+<form role="form">
+    				<div class="form-group">
+					 
+					<label for="name">
+						暱稱
+					</label>
+					<input type="text" class="form-control" id="name" />
+				</div>
+				<div class="form-group">
+					 
+					<label for="Email">
+						Email address
+					</label>
+					<input type="email" class="form-control" id="Email" />
+				</div>
+				<div class="form-group">
+					 
+					<label for="exampleInputPassword1">
+						Password
+					</label>
+					<input type="password" class="form-control" id="exampleInputPassword1" />
+				</div>
+				<div class="form-group">
+					 
+					<label for="exampleInputFile">
+						會員大頭貼更換
+					</label>
+					<input type="file" class="form-control-file" id="exampleInputFile" />
+					<p class="help-block">
+					請選擇大頭貼尺寸250*250px
+					</p>
+				</div>
+
+				<button type="submit" class="btn btn-primary">
+					Submit
+				</button>
+			</form>
+</div>
+    </body>
+</html>
