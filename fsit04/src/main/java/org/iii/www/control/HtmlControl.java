@@ -21,6 +21,7 @@ import org.iii.www.entity.Userimgs;
 import org.iii.www.service.AllviewsJsonImp;
 import org.iii.www.service.AllviewsService;
 import org.iii.www.service.CrudServic;
+import org.iii.www.service.IDOS;
 import org.iii.www.service.JsonService;
 import org.iii.www.service.User_favoriteService;
 import org.iii.www.service.UserimgsService;
@@ -48,6 +49,8 @@ public class HtmlControl {
 	CrudServic UserCrudImp;
 	@Autowired @Qualifier("AllviewsJsonImp")
 	JsonService allviewsJsonImp;
+	@Autowired @Qualifier("DOS")
+	IDOS dos;
 	
 	//首頁
 	@RequestMapping(value="/")
@@ -223,7 +226,70 @@ public class HtmlControl {
 	private boolean checkUserSession(HttpServletRequest request) {
 		return (request.getSession(true).getAttribute("user")==null)?false:true;
 	}
-	
+	@RequestMapping("/bmd")
+	public void bmd(HttpServletRequest request,HttpServletResponse res) {
+		
+		try {
+			res.getWriter().print(getPage(0));
+		} catch (IOException e) {
+			System.out.println(e.toString());
+		}
+	}
+	public String getPage(int request_type){
+	   
+	    int framework_type = 0;
+	    
+	    StringBuffer page = new StringBuffer();
+	    
+	    switch(request_type){
+	    
+	        case 0: //for browser   
+	            
+	            switch(framework_type){//framework none 
+	                
+	                case 0:        
+	                    page.append("<!DOCTYPE html>");
+
+	                    page.append("<html>");
+
+	                    page.append("<head>");
+
+	                    page.append(dos.getMeta());
+
+	                    page.append(dos.getIcon());
+
+	                    page.append(dos.getTitle());
+
+	                    page.append(dos.getStyle());
+
+	                    page.append(dos.getJs());
+
+	                    page.append("</head>");
+
+	                    page.append("<body>");
+	                    page.append(dos.getHeader());
+	                    page.append(dos.getContent());
+	                    page.append(dos.getFooter());
+	        	        page.append("</body>");
+	                    
+	                 break;
+	                    
+	                case 1://struts
+	                    
+	                break;    
+	            }
+	            
+	        break;
+	            
+	        case 1://for mobile app
+	            
+	            //mobile app page json response
+	            
+	        break;    
+	    }
+	    
+	    return page.toString();
+	}
 	
 	
 }
