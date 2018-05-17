@@ -2,6 +2,7 @@ package org.iii.www.control;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -211,10 +212,21 @@ public class HtmlControl {
 	}
 	//測試
 	@RequestMapping("/test")
-	public String myTest(HttpServletRequest request,Model model) {		
-		User u1 =(User) UserCrudImp.getByid(Integer.parseInt(request.getParameter("user_id")));
-		model.addAttribute("anwser", u1.getName());
+	public String myTest(HttpServletRequest request,Model model) {
+		try {
+		Class<?> a = Class.forName("org.iii.www.entity.User");
+
+		Object u1 =  UserCrudImp.getByid(Integer.parseInt(request.getParameter("user_id")));
+		Method m = a.getMethod("getName", new Class[]{});
+		
+		System.out.println(m.invoke(u1, new Object[]{}));
+//		model.addAttribute("anwser", u1.getName());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return "getMsg";
+		
 	}
 	@RequestMapping("/test2")
 	public String myTest2(HttpServletRequest request,Model model) {		
@@ -227,8 +239,7 @@ public class HtmlControl {
 		return (request.getSession(true).getAttribute("user")==null)?false:true;
 	}
 	@RequestMapping("/bmd")
-	public void bmd(HttpServletRequest request,HttpServletResponse res) {
-		
+	public void bmd(HttpServletRequest request,HttpServletResponse res) {		
 		try {
 			res.getWriter().print(getPage(0));
 		} catch (IOException e) {
