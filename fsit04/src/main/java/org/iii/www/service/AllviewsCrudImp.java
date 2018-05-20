@@ -11,17 +11,27 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service("AllviewsCrudImp")
 @Transactional
-public class AllviewsCrudImp implements CrudServic<Allviews>{
+public class AllviewsCrudImp<T> implements CrudServic<T>{
 	@Autowired AllviewsDao allviewsDao;
-
+	
+	private Class<T> x;
+	
+	public void setType(String x) {
+		try {
+			this.x=(Class<T>) Class.forName(x);
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 	@Override
-	public Allviews getByid(Integer total_id) {
-		return allviewsDao.getAllviewByid(total_id);
+	public T getByid(Integer total_id) {
+		return (T) allviewsDao.getAllviewByid(total_id);
 	}
 
 	@Override
-	public List<Allviews> getAll() {
+	public List<T> getAll() {
 		// TODO Auto-generated method stub
-		return allviewsDao.getAllview();
+		return (List<T>) allviewsDao.getAllview();
 	}
 }

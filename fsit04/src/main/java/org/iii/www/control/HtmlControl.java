@@ -14,6 +14,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.log4j.Logger;
 import org.iii.www.dao.User_favoriteDao;
 import org.iii.www.entity.Allviews;
 import org.iii.www.entity.User;
@@ -52,7 +53,7 @@ public class HtmlControl {
 	JsonService allviewsJsonImp;
 	@Autowired @Qualifier("DOS")
 	IDOS dos;
-	
+	private static Logger logger = Logger.getLogger(HtmlControl.class);
 	//首頁
 	@RequestMapping(value="/")
 	public String goToIndex(HttpServletRequest request,HttpServletResponse res,Model model) {
@@ -229,11 +230,21 @@ public class HtmlControl {
 		
 	}
 	@RequestMapping("/test2")
-	public String myTest2(HttpServletRequest request,Model model) {		
-		JSONArray Jarray= allviewsJsonImp.getAll();
-		model.addAttribute("anwser", Jarray);
-		return "getMsg";
+	public String myTest2(HttpServletRequest request,HttpServletResponse res,Model model) {		
+		String page ="<html>"+
+				"<body>${anwser}<body>"
+				+ "</html>";
+		model.addAttribute("anwser", "123");
+		model.addAttribute("page", page);
+	
+			
+		return "test";
 	}
+	@RequestMapping("/logTest")
+	public void logTest(HttpServletRequest request,HttpServletResponse res) {
+		logger.info("ip 位置"+request.getRemoteAddr());
+	}
+		
 	//確認是否有會員登入
 	private boolean checkUserSession(HttpServletRequest request) {
 		return (request.getSession(true).getAttribute("user")==null)?false:true;

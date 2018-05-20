@@ -9,15 +9,17 @@
         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
         http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 
-    <!-- 配置自动扫描的包,组件扫描 -->
+    <!-- 配置自動掃描package底下的annotation-->
     <context:component-scan base-package="org.iii.www">
+    	<!-- 掃描org.iii.www.util底下的@Aspect 動態代理 -->
+    	<context:include-filter type="annotation" expression="org.aspectj.lang.annotation.Aspect"/> 
         <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
         <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Service"/>
         <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Repository"/>
     </context:component-scan>
+	<aop:aspectj-autoproxy/>
 
-
-    <!-- ，配置视图解析器 如何把 handler 方法返回值解析为实际的物理视图，jsp路径的前缀和后缀 -->
+    <!-- 配置View解析器 如何把 handler 方法返回值轉換為View，jsp路径的前缀和後缀 -->
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="prefix" value="/WEB-INF/views/"></property>
         <property name="suffix" value=".jsp"></property>
@@ -25,7 +27,7 @@
 	<!-- 上傳檔案 -->
     <bean id="multipartResolver"
         class="org.springframework.web.multipart.commons.CommonsMultipartResolver" />
-    <!--  静态资源交给默认的Servlet-->
+    <!--  静態资源交给預設的Servlet-->
     <mvc:default-servlet-handler/>
 
     <!-- 使用 mvc:annotation-driven代替上边注解映射器和注解适配器配置

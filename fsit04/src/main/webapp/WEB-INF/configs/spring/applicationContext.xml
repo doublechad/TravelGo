@@ -6,15 +6,13 @@
         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
         http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd ">
 
-
     <context:component-scan base-package="org.iii.www">
         <context:exclude-filter type="annotation"
-            expression="org.springframework.stereotype.Controller" />
+            expression="org.springframework.stereotype.Controller" />         
     </context:component-scan>
-
-    <!-- 引入外部的属性文件 -->
-    <!-- <context:property-placeholder location="/jdbc.properties"/> -->
-
+    
+    
+    
     <!-- 配置jdbc连接池 -->
     <bean id="dataSource"
         class="org.springframework.jdbc.datasource.DriverManagerDataSource">
@@ -24,9 +22,7 @@
         <property name="username" value="root" />
         <property name="password" value="root" />
     </bean>
-
-
-    <!-- 配置hibernate 相关属性 -->
+    <!-- 配置hibernate 相關属性 -->
     <bean id="sessionFactory"
         class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
         <!-- 注入连接池 -->
@@ -42,27 +38,24 @@
                     * validate : 只会和数据库中的表进行比较,不会创建新表,但是会插入新值 -->
                 <prop key="hibernate.hbm2ddl.auto">update</prop>
             </props>
-        </property>
-		
-        <!-- hibernate 映射文件扫描 -->
+        </property>		
+        <!-- hibernate 映射文件掃描 -->
         <property name="packagesToScan">
             <list>
                 <value>org.iii.www.entity</value>
             </list>
         </property>
-        
-    
-   		
     </bean>
     
-    <!-- 配置事务管理器 -->
-    <bean id="transactionManager"
-        class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+    <!-- 使用 @AspectJ 支持 動態代理 輸出日誌之類的功能-->
+	<!--  <bean class="org.springframework.aop.aspectj.annotation. 
+    AnnotationAwareAspectJAutoProxyCreator"/>-->   
+    <!-- 配置事務管理器 -->
+    <bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
         <property name="sessionFactory" ref="sessionFactory"></property>
     </bean>
-
-    <!-- 开启事务注解 -->
-    <!-- transaction-manager：指定事务管理器名字，默认为transactionManager，当使用其他名字时需要明确指定 -->
+    <!-- 開啟事務註解 -->
+    <!-- transaction-manager：指定管理器名字，預設為transactionManager，使用其他名字時需要指定 -->
     <tx:annotation-driven transaction-manager="transactionManager" />
 
 </beans>

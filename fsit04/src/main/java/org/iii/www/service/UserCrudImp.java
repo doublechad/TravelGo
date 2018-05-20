@@ -10,19 +10,25 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service("UserCrudImp")
 @Transactional
-public class UserCrudImp implements CrudServic<User>{
+public class UserCrudImp<T> implements CrudServic<T>{
 	@Autowired UserDao userDao;
 	
-	@Override
-	public User getByid(Integer total_id) {
+	private Class<T> x;
+	
+	public void setType(String x) {
 		
-		return userDao.getPersonById(total_id);
+		
+	}
+	@Override
+	public T getByid(Integer total_id) {
+		
+		return (T)userDao.getPersonById(total_id);
 	}
 
 	@Override
-	public List<User> getAll() {
+	public List<T> getAll() {
 		// TODO Auto-generated method stub
-		return userDao.getAll();
+		return (List<T>)userDao.getAll();
 	}
 
 }
