@@ -6,10 +6,14 @@ import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
+import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.http.HttpRequest;
 
 @Aspect
 public class AspectTest {
+	
+	@Pointcut("execution(* org.iii.www.service.*.*(..))")
+	public void poinCut() {}
 	/**
 	 * 在org.iii.www.control下的所有方法
 	 * "execution(* org.iii.www.control.*.*(..))"
@@ -20,7 +24,7 @@ public class AspectTest {
 	 * @throws Exception 
 	 *  
 	 */
-	@Before("execution(* org.iii.www.service.*.*(..))")    
+	@Before("poinCut()")    
     public Object before(JoinPoint jp) throws Exception{
 		Object retVal = null;  //连接点方法返回值
 		//jp用來獲得傳入的參數

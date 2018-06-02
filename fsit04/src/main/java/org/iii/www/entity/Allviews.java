@@ -33,6 +33,8 @@ public class Allviews implements Serializable{
 	private Double lat;
 	private Double lng;
 	private String phone;
+	
+	//@Version 樂觀鎖定
 	@Id
 	@GeneratedValue(strategy= GenerationType.AUTO, generator="native")
 	@GenericGenerator(name = "native", strategy = "native")

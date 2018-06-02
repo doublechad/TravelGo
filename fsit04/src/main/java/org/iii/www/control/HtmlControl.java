@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
+import org.iii.www.dao.JDBCtemplateDemo;
 import org.iii.www.dao.Test0526Dao;
 import org.iii.www.dao.User_favoriteDao;
 import org.iii.www.entity.Allviews;
@@ -52,7 +53,8 @@ public class HtmlControl {
 	
 	@Autowired
 	ServletContext context;
-	
+	@Autowired
+	JDBCtemplateDemo jdbc;
 	@Autowired UserimgsService userimgsService;
 	
 	@Autowired User_favoriteService user_favoriteService;
@@ -246,10 +248,11 @@ public class HtmlControl {
 		try {
 			allviewsJsonImp.getAll();
 		}catch(Exception e) {
-			System.out.println(e.toString());;
+			System.out.println(e.toString());
 		}
-		System.out.println("test2");
-			
+		ArrayList<ArrayList<String>> list =(ArrayList<ArrayList<String>>) jdbc.getAllwithColumns();
+		model.addAttribute("data", list);
+		model.addAttribute("length", list.size());
 		return "test";
 	}
 	@RequestMapping("/logTest")
