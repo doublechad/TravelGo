@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 
 import javax.annotation.Resource;
 import javax.security.auth.message.callback.PrivateKeyCallback.Request;
@@ -15,8 +16,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
+import org.iii.www.dao.Test0526Dao;
 import org.iii.www.dao.User_favoriteDao;
 import org.iii.www.entity.Allviews;
+import org.iii.www.entity.Test0526Id;
 import org.iii.www.entity.User;
 import org.iii.www.entity.User_favorite;
 import org.iii.www.entity.Userimgs;
@@ -27,6 +30,7 @@ import org.iii.www.service.IDOS;
 import org.iii.www.service.JsonService;
 import org.iii.www.service.User_favoriteService;
 import org.iii.www.service.UserimgsService;
+import org.iii.www.util.Test0526;
 import org.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -40,17 +44,25 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 public class HtmlControl {
+	@Autowired
+	Test0526Dao tt;
 	
 	@Autowired
 	AllviewsService allviewsService;
+	
 	@Autowired
 	ServletContext context;
+	
 	@Autowired UserimgsService userimgsService;
+	
 	@Autowired User_favoriteService user_favoriteService;
+	
 	@Autowired @Qualifier("UserCrudImp")
 	CrudServic UserCrudImp;
+	
 	@Autowired @Qualifier("AllviewsJsonImp")
 	JsonService allviewsJsonImp;
+	
 	@Autowired @Qualifier("DOS")
 	IDOS dos;
 	private static Logger logger = Logger.getLogger(HtmlControl.class);
@@ -230,19 +242,30 @@ public class HtmlControl {
 		
 	}
 	@RequestMapping("/test2")
-	public String myTest2(HttpServletRequest request,HttpServletResponse res,Model model) {		
-		String page ="<html>"+
-				"<body>${anwser}<body>"
-				+ "</html>";
-		model.addAttribute("anwser", "123");
-		model.addAttribute("page", page);
-	
+	public String myTest2(HttpServletRequest request,HttpServletResponse res,Model model) {
+		try {
+			allviewsJsonImp.getAll();
+		}catch(Exception e) {
+			System.out.println(e.toString());;
+		}
+		System.out.println("test2");
 			
 		return "test";
 	}
 	@RequestMapping("/logTest")
 	public void logTest(HttpServletRequest request,HttpServletResponse res) {
 		logger.info("ip 位置"+request.getRemoteAddr());
+		Test0526Id xx =new Test0526Id();
+		xx.setUuid(UUID.randomUUID().toString());
+		xx.setId(0);
+		xx.setName("OK");
+		xx.setText("o ya");
+		try {
+			res.getWriter().println(tt.saveObject(xx));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 		
 	//確認是否有會員登入

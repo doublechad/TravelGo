@@ -17,17 +17,34 @@ public class AspectTest {
 	 *  "execution(* org.iii.www.control..*.*(..))"
 	 *    執行                            package            類名                    方法名稱
 	 *  "execution(* org.iii.www.control..HtmlControl.logTest(..))"
+	 * @throws Exception 
 	 *  
 	 */
-	@Before("execution(* org.iii.www.control..HtmlControl.logTest(..))")    
-    public void before(JoinPoint jp){
+	@Before("execution(* org.iii.www.service.*.*(..))")    
+    public Object before(JoinPoint jp) throws Exception{
+		Object retVal = null;  //连接点方法返回值
 		//jp用來獲得傳入的參數
 		Object[] parms =jp.getArgs();
-		HttpServletRequest request =(HttpServletRequest)parms[0];
-        System.out.println("方法執行前....."+request.getParameter("user"));    
+		for(Object obj:parms) {
+			HttpServletRequest request =(HttpServletRequest)parms[0];
+			 System.out.println("before方法執行前....."+request.getParameter("user"));
+			
+		}
+		if(true) {
+		throw new TesttException();
+		}
+        return retVal;
     }
-	@AfterReturning("execution(* org.iii.www.control.*.*(..))")    
-	  public void afterReturning(){    
-	          System.out.println("方法執行完畢.....");    
-	  }   
+//	@AfterReturning("execution(* org.iii.www.control.*.*(..))")    
+//	  public void xx(){    
+//	          System.out.println("方法執行完畢.....");    
+//	  }   
 }
+ class TesttException extends Exception{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	 
+ }
