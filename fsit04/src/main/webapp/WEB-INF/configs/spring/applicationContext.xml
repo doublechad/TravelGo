@@ -15,7 +15,14 @@
     	</context:component-scan>
     <aop:aspectj-autoproxy/>
     
-    
+    <bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+		<property name="basename">
+		<value>/resource/i18n/res</value>
+		</property>
+		<property name="defaultEncoding" value="UTF-8"/>
+		<property name="cacheSeconds"><value>0</value></property>
+	</bean>
+	
     <!-- 配置jdbc连接池 -->
     <bean id="dataSource"
         class="org.springframework.jdbc.datasource.DriverManagerDataSource">

@@ -22,6 +22,11 @@
     </context:component-scan>
 	<aop:aspectj-autoproxy/>
 	
+	<bean id="localeResolver" class="org.springframework.web.servlet.i18n.CookieLocaleResolver" />
+	<mvc:interceptors>
+		<bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor" />
+	</mvc:interceptors>
+	
     <!-- 配置View解析器 如何把 handler 方法返回值轉換為View，jsp路径的前缀和後缀 -->
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="prefix" value="/WEB-INF/views/"></property>
