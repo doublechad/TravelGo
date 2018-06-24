@@ -34,7 +34,7 @@ public class AspectTest {
 			 System.out.println("before方法執行前....."+request.getParameter("user"));
 			
 		}
-		if(true) {
+		if(false) {
 		throw new TesttException();
 		}
         return retVal;

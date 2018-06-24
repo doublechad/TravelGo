@@ -2,13 +2,17 @@ package org.iii.www.control;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Hashtable;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Random;
 
 import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -16,6 +20,7 @@ import org.iii.www.entity.User;
 import org.iii.www.service.UserService;
 import org.iii.www.util.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,6 +28,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.view.RedirectView;
+
+import allPay.payment.integration.AllInOne;
 
 @Controller
 public class UserControl {
@@ -162,9 +170,50 @@ public class UserControl {
 			 return "getMsg";
 		}
 		
-		
-		
 	}
-	
+	@RequestMapping(value="/payment",method=RequestMethod.POST)
+	public void payment(HttpServletRequest request,HttpServletResponse response,Model model) throws IOException {
+		System.out.println(request.getParameter("TradeNo"));
+//		Map<String,String[]> m1 = request.getParameterMap();
+//		for(Entry<String, String[]> entry : m1.entrySet()) {
+//			System.out.print("key ="+entry.getKey());
+//			for(String s :entry.getValue()) {
+//				System.out.print(" ,value = "+s);
+//			}
+//			System.out.println();
+//			System.out.println("------------------------------");
+//		}
+		response.setStatus(201);
+		response.getWriter().println("ok");
+	}
+	@RequestMapping(value="/formtest",method=RequestMethod.POST)
+	public void formtest(HttpServletRequest request,HttpServletResponse response,Model model) throws IOException {
+		Map<String,String[]> m1 = request.getParameterMap();
+		AllInOne all =new AllInOne("", context.getRealPath("/WEB-INF/configs/allpay/payment_conf.xml"));
+		Hashtable<String, String> table =new Hashtable<>();
+		for(Entry<String, String[]> entry : m1.entrySet()) {
+			System.out.print("key ="+entry.getKey());
+			table.put(entry.getKey(), entry.getValue()[0]);
+			for(String s :entry.getValue()) {
+				System.out.print(" ,value = "+s);
+			}
+			System.out.println();
+			System.out.println("------------------------------");
+		}
+		System.out.println(all.compareCheckMacValue(table));
+		response.setStatus(201);
+		response.getWriter().println("ok");
+	}
+	@RequestMapping(value="/allpay",method=RequestMethod.POST)
+	public void  allpay(HttpServletRequest request,HttpServletResponse response,Model model) throws IOException {
+		
+		response.setStatus(HttpServletResponse.SC_TEMPORARY_REDIRECT);
+		response.setHeader("Location","http://localhost:8080/fsit04/allpay1");
+	}
+	@RequestMapping(value="/allpay1",method=RequestMethod.POST)
+	public void allpaypost(HttpServletRequest request,HttpServletResponse response,Model model) throws IOException {
+		
+		response.getWriter().println("post page");;
+	}
 	
 }
