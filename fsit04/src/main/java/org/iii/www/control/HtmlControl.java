@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.UUID;
 
 import javax.annotation.Resource;
@@ -220,7 +222,7 @@ public class HtmlControl {
 			} catch (Exception e) {
 				System.out.println(e.toString());
 			}
-			filePath[i]=context.getContextPath()+"/upload/"+src;
+			filePath[i]=context.getRealPath("")+"/upload/"+src;
 		}
 		userimgsService.saveUserimgs(request,filePath);
 		return "test";
@@ -244,16 +246,48 @@ public class HtmlControl {
 		
 	}
 	@RequestMapping("/test2")
-	public String myTest2(HttpServletRequest request,HttpServletResponse res,Model model) {
-		try {
-			allviewsJsonImp.getAll();
-		}catch(Exception e) {
-			System.out.println(e.toString());
-		}
-		ArrayList<ArrayList<String>> list =(ArrayList<ArrayList<String>>) jdbc.getAllwithColumns();
-		model.addAttribute("data", list);
-		model.addAttribute("length", list.size());
-		return "test";
+	public void myTest2(HttpServletRequest request,HttpServletResponse res,Model model) throws IOException {
+//		try {
+//			allviewsJsonImp.getAll();
+//		}catch(Exception e) {
+//			System.out.println(e.toString());
+//		}
+//		ArrayList<ArrayList<String>> list =(ArrayList<ArrayList<String>>) jdbc.getAllwithColumns();
+//		model.addAttribute("data", list);
+//		model.addAttribute("length", list.size());
+		//return "test";
+		Map<String, String[]> map =request.getParameterMap();
+		for(Entry<String,String[]> e1 : map.entrySet()) {
+			System.out.print(e1.getKey()+"  :  ");
+			for(String s:e1.getValue()) {
+				System.out.print(s+"   :   ");
+			}
+			System.out.println();
+		};
+		res.getWriter().println("ok");
+	}
+	@RequestMapping(value="/test2",method=RequestMethod.POST)
+	public void myTest2Post(HttpServletRequest request,HttpServletResponse res,Model model) throws IOException {
+		System.out.println("ok");
+//		try {
+//			allviewsJsonImp.getAll();
+//		}catch(Exception e) {
+//			System.out.println(e.toString());
+//		}
+//		ArrayList<ArrayList<String>> list =(ArrayList<ArrayList<String>>) jdbc.getAllwithColumns();
+//		model.addAttribute("data", list);
+//		model.addAttribute("length", list.size());
+		//return "test";
+//		Map<String, String[]> map =request.getParameterMap();
+//		for(Entry<String,String[]> e1 : map.entrySet()) {
+//			System.out.print(e1.getKey()+"  :  ");
+//			for(String s:e1.getValue()) {
+//				System.out.print(s+"   :   ");
+//			}
+//			System.out.println();
+//		};
+		System.out.println(request.getReader().readLine());
+		res.getWriter().println("byPost");
 	}
 	@RequestMapping("/logTest")
 	public void logTest(HttpServletRequest request,HttpServletResponse res) {

@@ -29,11 +29,11 @@ public class AspectTest {
 		Object retVal = null;  //连接点方法返回值
 		//jp用來獲得傳入的參數
 		Object[] parms =jp.getArgs();
-		for(Object obj:parms) {
-			HttpServletRequest request =(HttpServletRequest)parms[0];
-			 System.out.println("before方法執行前....."+request.getParameter("user"));
-			
-		}
+//		for(Object obj:parms) {
+//			HttpServletRequest request =(HttpServletRequest)parms[0];
+//			 System.out.println("before方法執行前....."+request.getParameter("user"));
+//			
+//		}
 		if(false) {
 		throw new TesttException();
 		}

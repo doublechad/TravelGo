@@ -12,10 +12,8 @@
         <spring.version>4.1.3.RELEASE</spring.version>
         <commons-lang.version>2.6</commons-lang.version>
         <slf4j.version>1.7.6</slf4j.version>
-        <servlet.version>2.5</servlet.version>
+        <servlet.version>3.1.0</servlet.version>
     </properties>
-
-
     <!-- 管理所有spring相关jar包的版本号 -->
     <dependencyManagement>
         <dependencies>
@@ -161,10 +159,11 @@
 		</dependency>
         <!-- servlet -->
         <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>servlet-api</artifactId>
-            <version>${servlet.version}</version>
-        </dependency>
+		    <groupId>javax.servlet</groupId>
+		    <artifactId>javax.servlet-api</artifactId>
+		    <version>3.1.0</version>
+		    <scope>provided</scope>
+		</dependency>
 
         <dependency>
             <groupId>commons-lang</groupId>
@@ -202,6 +201,23 @@
 	  		<artifactId>jstl</artifactId>
 	 	 	<version>1.1.2</version>
   		</dependency>
+  		<!-- jwt -->
+	   <!-- https://mvnrepository.com/artifact/com.auth0/java-jwt -->
+	   <dependency>
+		    <groupId>com.auth0</groupId>
+		    <artifactId>java-jwt</artifactId>
+		    <version>3.4.0</version>
+		</dependency>
+		<dependency>
+		    <groupId>commons-codec</groupId>
+		    <artifactId>commons-codec</artifactId>
+		    <version>1.10</version>
+		</dependency>
+	   <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>2.6.7</version>
+        </dependency>
     </dependencies>
     
     <build>

@@ -14,7 +14,7 @@
         <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller" />  
     	</context:component-scan>
     <aop:aspectj-autoproxy/>
-    
+    <!-- 定義i18n properties  位置-->
     <bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
 		<property name="basename">
 		<value>/resource/i18n/res</value>
@@ -23,7 +23,7 @@
 		<property name="cacheSeconds"><value>0</value></property>
 	</bean>
 	
-    <!-- 配置jdbc连接池 -->
+    <!-- 配置JDBC連接 for Hibernate -->
     <bean id="dataSource"
         class="org.springframework.jdbc.datasource.DriverManagerDataSource">
         <property name="driverClassName" value="com.mysql.jdbc.Driver" />
@@ -36,11 +36,12 @@
     <!-- 配置hibernate 相關属性 -->
     <bean id="sessionFactory"
         class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
-        <!-- 注入连接池 -->
+        <!-- JDBC資訊 -->
         <property name="dataSource" ref="dataSource"></property>
-        <!-- hibernate 的相关属性 -->
+        <!-- hibernate 的属性 -->
         <property name="hibernateProperties">
             <props>
+            	<!-- 在console顯示執行的sql語法 -->
                 <prop key="hibernate.show_sql">false</prop>
                 <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
                 <prop key="hibernate.format_sql">true </prop>
@@ -57,10 +58,7 @@
             </list>
         </property>
     </bean>
-    
-    <!-- 使用 @AspectJ 支持 動態代理 輸出日誌之類的功能-->
-	<!--  <bean class="org.springframework.aop.aspectj.annotation. 
-    AnnotationAwareAspectJAutoProxyCreator"/>-->   
+      
     <!-- 配置事務管理器 -->
     <bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
         <property name="sessionFactory" ref="sessionFactory"></property>
